@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>apply</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="../angular-1.6.6/angular.js"></script>
+    </head>
+    <body ng-app="myApp" ng-controller="myControll">
+            <div class="main">
+                <div class="top" id="top">
+                    {{name}}
+                </div>
+                <div class="bottom">
+                    <button ng-click="start()">开始</button>
+                    <button ng-click="stop()">停止</button>
+                </div>
+            </div>
+    </body>
+    <script>
+        var app = angular.module('myApp',[]);
+        app.controller('myControll',['$scope',function($scope){
+                timer=null;
+                $scope.name = "随机点名";
+                $scope.names =  ['张飞', '关羽', '刘备', '貂蝉', '诸葛亮', '曹操', '孙权', '吕布', '张辽', '赵云'];
+                $scope.start=function(){
+                    clearInterval(timer);
+                    timer=setInterval(function(){
+                        var r = parseInt(Math.random()*10);
+                        $scope.name=$scope.names[r];
+                        //不在同一线程内更改$scope中的数据，他是不会做出自动的响应，需要手动的方式。
+                        $scope.$apply;
+                    },100);
+                };
+                $scope.stop = function(){
+                    clearInterval(timer);
+                };
+        }]);
+    </script>
+</html>

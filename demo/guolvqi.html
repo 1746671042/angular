@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>过滤器</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="../angular-1.6.6/angular.js"></script>
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <div ng-app="myApp" ng-controller="myCol">
+            <table border="1px solid black">
+                <tr>
+                    <td><input type="button" value="姓名" ng-click="name()"></td>
+                    <td><input type="button" value="分数" ng-click="score()"></td>
+                    <td><input type="button" value="年龄" ng-click="age()"></td>
+                </tr>
+                <tr ng-repeat="v in data| orderBy:sort:sortnum |limitTo:num:startNum">    
+                    <td>{{v.name}}</td>
+                    <td>{{v.score}}</td>
+                    <td>{{v.age}}</td>
+                </tr>
+
+            </table>
+            <!--                <input type="button" value="分数排序" ng-click="score()"/>
+                            <input type="button" value="姓名排序" ng-click="name()"/>-->
+            <input type="button" value="上一页" ng-click="lastPage()"/>
+            <input type="button" value="下一页" ng-click="nextPage()"/>
+{{startpage}}
+            <hr>
+            <select ng-init="selectedName = names[0]" ng-model="selectedName" ng-options="x for x in names">
+            </select>
+        </div>
+    </body>
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myCol", ["$scope", function ($scope, $http) {
+                $scope.data = [
+                    {"name": "张三", "score": 90, "age": 12},
+                    {"name": "李四", "score": 100, "age": 52},
+                    {"name": "王五", "score": 50, "age": 22},
+                    {"name": "赵六", "score": 90, "age": 92},
+                    {"name": "刘七", "score": 80, "age": 55},
+                    {"name": "王五", "score": 50, "age": 22},
+                    {"name": "赵六", "score": 90, "age": 92},
+                    {"name": "刘七", "score": 80, "age": 55}
+
+                ];
+
+                $scope.num = 2;
+                $scope.startNum = 0;
+                $scope.sum = $scope.data.length;
+                $scope.sortnum = 0;
+                $scope.score = function () {
+                    $scope.sort = "score";
+                    if ($scope.sortnum == 0) {
+                        $scope.sortnum = 1;
+                    } else {
+                        $scope.sortnum = 0;
+                    }
+                    $scope.sort = "score";
+                };
+                $scope.name = function () {
+                    if ($scope.sortnum == 0) {
+                        $scope.sortnum = 1;
+                    } else {
+                        $scope.sortnum = 0;
+                    }
+                    $scope.sort = "name";
+                };
+                $scope.age = function () {
+                    if ($scope.sortnum == 0) {
+                        $scope.sortnum = 1;
+                    } else {
+                        $scope.sortnum = 0;
+                    }
+                    $scope.sort = "age";
+                };
+//                if ($scope.sum > 1) {
+//                    $scope.page = 1;   //当前页数
+//                    $scope.start = ($scope.page - 1) * $scope.num;  //起始页
+//                    $scope.countpage = ($scope.sum / $scope.num);   //总页数
+//                    $scope.startpage = $scope.page - 2;
+//                    $scope.endpage = $scope.page + 2;
+//                    if ($scope.countpage >= 4) {
+//                        if ($scope.startpage <= 0) {
+//                            $scope.startpage = 1;
+//                            $scope.endpage = 3;
+//                        }
+//                        if ($scope.endpage > $scope.countpage) {
+//                            $scope.endpage = $scope.countpage;
+//                            $scope.startpage = $scope.endpage - 1;
+//                        }
+//                    } else {
+//                        $scope.startpage = 1;
+//                        $scope.endpage = $scope.$countpage;
+//                    }
+//
+//                    if ($scope.$page > 1) {
+//                        $scope.lastPage = function () {
+//                            if ($scope.startNum != 0) {
+//                                $scope.startNum -= $scope.num;
+//                            }
+//                        };
+//                    }
+//                    for ($scope.$i = $scope.$startpage; $scope.$i < $scope.$endpage; $scope.$i++) {
+//                        if ($scope.$i == $scope.$page) {
+//                                    <a href="">$scope.$i</a>
+//                        }
+//                    }
+//                }
+
+
+                $scope.lastPage = function () {
+                    if ($scope.startNum != 0) {
+                        $scope.startNum -= $scope.num;
+                    }
+                };
+                $scope.nextPage = function () {
+                    $scope.startNum = $scope.startNum + $scope.num;
+                };
+                $scope.names = ["Google", "Runoob", "Taobao"];
+            }]);
+    </script>
+</html>

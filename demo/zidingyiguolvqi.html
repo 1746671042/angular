@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>自定义</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="../angular-1.6.6/angular.js"></script>
+        <style>
+            .red{
+                width:100px;
+                height: 100px;
+                background: red;
+            }
+            .green{
+                width:100px;
+                height: 100px;
+                background: green;
+            }
+            .bot{
+                background-color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div ng-app="myApp">
+            <div ng-controller="myCol">
+                <input type="text" name="name" ng-model="name">
+                <input type="text" name="name" ng-model="search">
+                <div ng-repeat="v in data| filter:name:search">
+                    姓名：{{v.name}}年龄：{{v.age}} 分数：{{v.score}};
+                </div>
+                <select ng-click="yellow()">
+                    <option  ng-model="red" >红色</option>
+                    <option  ng-model="blue">绿色</option>
+                    <div ng-bind="option" class="bot" ng-class="{'background-color', 'red'}"></div>
+                </select>
+
+            </div>
+
+
+            <div ng-controller="youCol">
+                <div ng-class="{true:'red',false:'green'}[background]"></div>
+                <button ng-click="change()">修改背景颜色</button>
+            </div>
+            
+        </div>
+    </body>
+
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myCol", ["$scope", function ($scope) {
+        $scope.name = "张三";
+        $scope.search = "";
+        $scope.data = [
+        {"name": "张三", "score": 90, "age": 12},
+        {"name": "李四", "score": 100, "age": 52},
+        {"name": "王五", "score": 50, "age": 22},
+        {"name": "赵六", "score": 90, "age": 92},
+        {"name": "刘七", "score": 80, "age": 55},
+        {"name": "王五", "score": 50, "age": 22},
+        {"name": "赵六", "score": 90, "age": 92},
+        {"name": "刘七", "score": 80, "age": 55}];}]);
+        
+        app.controller("youCol", ["$scope", function($scope) {
+        $scope.background = true;
+        $scope.change = function(){
+            if($scope.background==false){
+                $scope.background=true;
+            }else{
+                $scope.background=false;
+            }
+        }
+        }])
+
+    </script>
+</html>

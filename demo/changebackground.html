@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>改变背景图</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="../angular-1.6.6/angular.js"></script>
+        <style>
+            .bg1{
+                width:200px;
+                height:200px;
+                background: url(../images/Speaker_louder.png);
+                background-size: cover;
+            }
+            .bg2{
+                width:200px;
+                height:200px;
+                background: url(../images/Speaker_mute.png);
+                background-size: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <div ng-app="myApp">
+            <div ng-controller="myCon">
+                <button ng-click="change()">改变图片</button>
+                <div ng-class="{true:'bg1',false:'bg2'}[background]"></div>
+            </div>
+        </div>
+    </body>
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myCon", ["$scope", function ($scope) {
+                $scope.background = true;
+                $scope.change = function () {
+                    if ($scope.background == true) {
+                        $scope.background = false;
+                    }else{
+                        $scope.background = true;
+                    }
+                }
+
+            }])
+    </script>
+</html>
